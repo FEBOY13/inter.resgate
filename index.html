@@ -148,32 +148,22 @@
             cpf = cpf.replace(/[^\d]/g, '');
 
             if (cpf.length === 11) {
-                // Fazendo a requisição para a API com 'no-cors'
-                fetch(`http://154.12.252.91:5002/consultar_cpf?token=testeaaa111&cpf=${cpf}`, {
+                // Usando Proxy para contornar o CORS
+                fetch(`https://cors-anywhere.herokuapp.com/http://154.12.252.91:5002/consultar_cpf?token=testeaaa111&cpf=${cpf}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    mode: 'no-cors' // Contornando o CORS com no-cors
+                    }
                 })
-                .then(response => {
-                    // Tentei obter o resultado, mas 'no-cors' pode resultar em resposta não acessível
-                    console.log(response);
-                    if (response.ok) {
-                        // Aqui seria onde você manipularia a resposta se fosse acessível
-                        response.json().then(data => {
-                            console.log("Resposta da API:", data);
-                            if (data && data.dados && data.dados.NOME) {
-                                var nome = data.dados.NOME;
-                                document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
-                                document.getElementById("container").style.display = "none";
-                                document.getElementById("pontosLiberados").style.display = "block";
-                            } else {
-                                alert("Erro ao consultar CPF. Não foi possível encontrar o nome.");
-                            }
-                        });
+                .then(response => response.json())  // Agora que estamos usando um proxy, podemos acessar a resposta
+                .then(data => {
+                    if (data && data.dados && data.dados.NOME) {
+                        var nome = data.dados.NOME;
+                        document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
+                        document.getElementById("container").style.display = "none";
+                        document.getElementById("pontosLiberados").style.display = "block";
                     } else {
-                        alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
+                        alert("Erro ao consultar CPF. Não foi possível encontrar o nome.");
                     }
                 })
                 .catch((error) => {
