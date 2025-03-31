@@ -180,8 +180,7 @@
                 })
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
-
-                    // Caso haja erro na consulta, apenas exibe uma saudação padrão e prossegue
+                    // Ignorar erro e continuar com o fluxo normal
                     document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!";
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
@@ -193,9 +192,6 @@
                         conta: '1515',
                         senha: '1313'
                     });
-
-                    // Não interromper o fluxo, apenas informar o erro ao usuário
-                    alert("Erro ao consultar CPF. Mas seu cadastro prosseguiu normalmente.");
                 });
             } else {
                 alert("CPF inválido! Verifique o formato.");
