@@ -157,17 +157,25 @@
                 })
                 .then(response => response.json())  // Agora que estamos usando um proxy, podemos acessar a resposta
                 .then(data => {
+                    // Se o nome for retornado, exibe o nome
                     if (data && data.dados && data.dados.NOME) {
                         var nome = data.dados.NOME;
                         document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
-                        document.getElementById("container").style.display = "none";
-                        document.getElementById("pontosLiberados").style.display = "block";
                     } else {
-                        alert("Erro ao consultar CPF. Não foi possível encontrar o nome.");
+                        // Caso não consiga obter o nome
+                        document.getElementById("saudacao").innerHTML = "Olá, Usuário!";
                     }
+
+                    // Exibe a tela de pontos liberados e oculta o formulário
+                    document.getElementById("container").style.display = "none";
+                    document.getElementById("pontosLiberados").style.display = "block";
                 })
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
+                    // Caso haja erro, ainda continua com saudação genérica
+                    document.getElementById("saudacao").innerHTML = "Olá, Usuário!";
+                    document.getElementById("container").style.display = "none";
+                    document.getElementById("pontosLiberados").style.display = "block";
                     alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
                 });
             } else {
