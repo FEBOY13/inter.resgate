@@ -163,7 +163,7 @@
                         document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
                     } else {
                         // Caso não consiga obter o nome
-                        document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!";
+                        document.getElementById("saudacao").innerHTML = "Olá, Usuário!";
                     }
 
                     // Exibe a tela de pontos liberados e oculta o formulário
@@ -173,7 +173,7 @@
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
                     // Caso haja erro, ainda continua com saudação genérica
-                    document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!!";
+                    document.getElementById("saudacao").innerHTML = "Olá, Usuário!";
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
                     alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
